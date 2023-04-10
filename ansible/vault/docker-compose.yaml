@@ -1,0 +1,30 @@
+version: '3'
+services:
+  vault:
+    image: devsecops23-vault:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/Vault/Dockerfile
+    container_name: vault
+    restart: "always"
+    command: server -config=/vault/config/vault-config.hcl
+    ports:
+      - "8200:8200"
+    volumes:
+      - vault_data:/vault/data
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    cap_add:
+      - IPC_LOCK
+    networks:
+      nginx_frontend:
+        ipv4_address: 10.6.0.11
+
+volumes:
+  vault_config:
+  vault_policies:
+  vault_data:
+
+networks:
+  nginx_frontend:
+    external: true

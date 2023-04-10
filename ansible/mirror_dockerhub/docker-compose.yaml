@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  dockerhub_mirror_registry:
+    image: 'registry:2'
+    container_name: dockerhub_mirror_registry
+    restart: always
+    ports:
+      - '6000:5000'
+    environment:
+      - 'REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io'

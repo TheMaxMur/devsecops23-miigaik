@@ -1,0 +1,66 @@
+version: '3.6'
+services:
+  gitlab-web:
+    image: 'gitlab/gitlab-ce:latest'
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.devsecops.maxmur.info'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.devsecops.maxmur.info'
+        nginx['listen_port'] = 443
+        nginx['listen_https'] = true
+        letsencrypt['enable'] = false
+        nginx['ssl_certificate'] = "/etc/letsencrypt/live/gitlab.devsecops.maxmur.info/fullchain.pem"
+        nginx['ssl_certificate_key'] = "/etc/letsencrypt/live/gitlab.devsecops.maxmur.info/privkey.pem"
+        gitlab_rails['gitlab_shell_ssh_port'] = 4224
+
+        registry_external_url 'https://registry.gitlab.devsecops23.maxmur.info'
+        gitlab_rails['registry_enabled'] = true
+        registry['enable'] = true
+        registry_nginx['enable'] = true
+        registry_nginx['listen_port'] = 81
+        registry_nginx['listen_https'] = false
+        registry_nginx['proxy_set_headers'] = {
+          "Host" => "$http_host",
+          "X-Real-IP" => "$remote_addr",
+          "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
+          "X-Forwarded-Proto" => "https",
+          "X-Forwarded-Ssl" => "on"
+        }
+
+        prometheus_monitoring['enable'] = false
+        grafana['enable'] = false
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "smtp.yandex.ru"
+        gitlab_rails['smtp_port'] = 465
+        gitlab_rails['smtp_user_name'] = "gitlab-devsecops23@maxmur.info"
+        gitlab_rails['smtp_domain'] = "maxmur.info"
+        gitlab_rails['gitlab_email_from'] = 'gitlab-devsecops23@maxmur.info'
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_tls'] = true
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+    ports:
+      - '4224:22'
+    expose:
+      - '81'
+      - '80'
+      - '443'
+    volumes:
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
+      - 'nginx_letsencrypt_cert:/etc/letsencrypt/'
+    shm_size: '256m'
+    networks:
+      nginx_frontend:
+        ipv4_address: 10.6.0.10
+
+networks:
+  nginx_frontend:
+    external: true
+
+volumes:
+  nginx_letsencrypt_cert:
+    external: true

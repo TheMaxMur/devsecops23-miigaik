@@ -1,0 +1,45 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:1.23.3-alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - letsencrypt_cert:/etc/letsencrypt
+      - letsencrypt_data:/var/www/certbot
+      - ./nginx_configs/:/etc/nginx/conf.d/
+    restart: "always"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://gitlab.devsecops23.maxmur.info"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      frontend:
+        ipv4_address: 10.6.0.2
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - letsencrypt_cert:/etc/letsencrypt
+      - letsencrypt_data:/var/www/certbot
+      - letsencrypt_logs:/var/log/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew && chown -R 101:101 /etc/letsencrypt; sleep 12h & wait $${!}; done;'"
+    networks:
+      frontend:
+        ipv4_address: 10.6.0.3
+
+volumes:
+  letsencrypt_cert:
+  letsencrypt_data:
+  letsencrypt_logs:
+
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 10.6.0.0/16

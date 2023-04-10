@@ -1,0 +1,192 @@
+---
+- name: Configure infrastructure
+  hosts: all
+  tasks:
+    - name: Install prerequisites
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - curl
+          - gnupg
+          - ca-certificates
+          - lsb-release
+          - apt-transport-https
+          - software-properties-common
+          - jq
+          - docker.io
+          - docker-compose
+
+    - name: Create new user
+      ansible.builtin.user:
+        name: "{{ server_username }}"
+        shell: /bin/bash
+        groups: sudo
+        append: true
+        password: "{{ user_password | password_hash('sha512') }}"
+
+    - name: Create .ssh directory for new user
+      ansible.builtin.file:
+        path: /home/{{ server_username }}/.ssh
+        state: directory
+        owner: "{{ server_username }}"
+        group: "{{ server_username }}"
+        mode: '0700'
+
+    - name: Copy authorized_keys for new user
+      ansible.builtin.copy:
+        remote_src: true
+        src: /root/.ssh/authorized_keys
+        dest: /home/{{ server_username }}/.ssh/authorized_keys
+        owner: "{{ server_username }}"
+        group: "{{ server_username }}"
+        mode: '0600'
+
+    - name: Create folder for project
+      ansible.builtin.file:
+        path: /home/{{ server_username }}/config
+        state: directory
+        owner: "{{ server_username }}"
+        group: "{{ server_username }}"
+        mode: '0700'
+      when: inventory_hostname == "gitlab"
+
+    - name: Copy gitlab files for GitLab server
+      ansible.builtin.copy:
+        src: "./gitlab"
+        dest: "/home/{{ server_username }}/config/"
+        mode: '0600'
+        owner: root
+        group: root
+      when: inventory_hostname == "gitlab"
+
+    - name: Git checkout defectdojo
+      ansible.builtin.git:
+        repo: 'https://github.com/DefectDojo/django-DefectDojo.git'
+        dest: /home/{{ server_username }}/config/defectdojo
+      when: inventory_hostname == "gitlab"
+
+    - name: Copy defectdojo files for GitLab server
+      ansible.builtin.copy:
+        src: "./defectdojo/docker-compose.yml"
+        dest: "/home/{{ server_username }}/config/defectdojo/docker-compose.yml"
+        mode: '0600'
+        owner: root
+        group: root
+      when: inventory_hostname == "gitlab"
+
+    - name: Copy vault files for GitLab server
+      ansible.builtin.copy:
+        src: "./vault"
+        dest: "/home/{{ server_username }}/config/"
+        mode: '0600'
+        owner: root
+        group: root
+      when: inventory_hostname == "gitlab"
+
+    - name: Copy dockerhub mirror files for GitLab server
+      ansible.builtin.copy:
+        src: "./mirror_dockerhub"
+        dest: "/home/{{ server_username }}/config/"
+        mode: '0600'
+        owner: root
+        group: root
+      when: inventory_hostname == "gitlab"
+
+    - name: Copy nginx files for GitLab server
+      ansible.builtin.copy:
+        src: "./nginx"
+        dest: "/home/{{ server_username }}/config/"
+        #mode: '0600'
+        owner: root
+        group: root
+      when: inventory_hostname == "gitlab"
+
+    - name: Init letsencrypt
+      ansible.builtin.shell: bash /home/{{ server_username }}/config/nginx/init-lets.sh
+      args:
+        chdir: "/home/{{ server_username }}/config/nginx/"
+        executable: /bin/bash
+      when: inventory_hostname == "gitlab"
+
+    - name: Copy true nginx files for GitLab server
+      ansible.builtin.copy:
+        src: "./nginx_configs"
+        dest: "/home/{{ server_username }}/config/nginx/"
+        mode: '0600'
+        owner: root
+        group: root
+      when: inventory_hostname == "gitlab"
+
+    - name: Restart nginx
+      ansible.builtin.shell: docker exec nginx nginx -s reload; docker-compose up -d
+      args:
+        chdir: "/home/{{ server_username }}/config/nginx/"
+      when: inventory_hostname == "gitlab"
+
+    - name: Up gitlab
+      ansible.builtin.shell: docker-compose up -d
+      args:
+        chdir: "/home/{{ server_username }}/config/gitlab/"
+      when: inventory_hostname == "gitlab"
+
+    - name: Up defectdojo
+      ansible.builtin.shell: /home/{{ server_username }}/config/defectdojo/dc-up-d.sh postgres-redis
+      args:
+        chdir: "/home/{{ server_username }}/config/defectdojo/"
+      ignore_errors: true
+      when: inventory_hostname == "gitlab"
+
+    - name: Up vault
+      ansible.builtin.shell: docker-compose up -d; sleep 10; docker exec -it vault vault operator init >> keys
+      args:
+        chdir: "/home/{{ server_username }}/config/vault/"
+      when: inventory_hostname == "gitlab"
+
+    - name: Up dockerhub mirror
+      ansible.builtin.shell: docker-compose up -d
+      args:
+        chdir: "/home/{{ server_username }}/config/mirror_dockerhub/"
+      when: inventory_hostname == "gitlab"
+
+    - name: Download GitLab Runner package
+      get_url:
+        url: "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb"
+        dest: /tmp/gitlab-runner.deb
+      ignore_errors: true
+      when: inventory_hostname == "gitlab-runner"
+
+    - name: Install GitLab Runner package
+      apt:
+        deb: /tmp/gitlab-runner.deb
+        state: present
+      ignore_errors: true
+      when: inventory_hostname == "gitlab-runner"
+
+    - name: Docker daemon.json gitlab runner
+      ansible.builtin.template:
+        src: "daemon.json.j2"
+        dest: "/etc/docker/daemon.json"
+        mode: '0644'
+      when: inventory_hostname == "gitlab-runner"
+
+    - name: Restart docker gitlab runner
+      ansible.builtin.service:
+        name: docker
+        state: restarted
+      when: inventory_hostname == "gitlab-runner"
+
+    - name: Configure sshd
+      lineinfile:
+        path: "/etc/ssh/sshd_config"
+        regex: "^(#)?{{item.key}}"
+        line: "{{item.key}} {{item.value}}"
+        state: present
+      loop:
+        - { key: "PermitRootLogin", value: "no" }
+        - { key: "PasswordAuthentication", value: "no" }
+        - { key: "Port", value: "{{ server_ssh_port }}"}
+
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
