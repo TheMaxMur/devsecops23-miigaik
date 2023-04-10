@@ -1,0 +1,99 @@
+<mxfile host="65bd71144e">
+    <diagram id="hoH-kytnVjWNUNUsAGuI" name="Page-1">
+        <mxGraphModel dx="1112" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Gitlab Server&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=25;fillColor=#808080;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="100" y="160" width="320" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;strokeColor=#FFFFFF;" edge="1" parent="1" source="3" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Gitlab" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="220" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" style="edgeStyle=none;html=1;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;strokeColor=#FFFFFF;" edge="1" parent="1" source="4" target="5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" style="edgeStyle=none;html=1;exitX=0.971;exitY=0.953;exitDx=0;exitDy=0;fontSize=22;startArrow=classic;startFill=1;exitPerimeter=0;entryX=0.014;entryY=0.044;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#FFFFFF;strokeColor=#FFFFFF;" edge="1" parent="1" source="4" target="6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Nginx" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="220" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Defectdojo" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="320" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Vault" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="320" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="CI/CD Runner&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=25;fillColor=#808080;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="160" width="320" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Gitlab Runner&lt;br&gt;Service" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="230" width="200" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;startArrow=classic;startFill=1;strokeColor=#3399FF;fontColor=#FFFFFF;" edge="1" parent="1" source="3" target="11">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="460" y="250"/>
+                            <mxPoint x="460" y="285"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="Stage&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=25;fillColor=#808080;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="100" y="460" width="320" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="Production&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br style=&quot;font-size: 25px;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=25;fillColor=#808080;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="460" width="320" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Openreasty&lt;br&gt;+ WAF" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="520" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#FFFFFF;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;" edge="1" parent="1" source="19" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Flask App" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="520" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#FFFFFF;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;" edge="1" parent="1" source="20" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="Certbot" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="610" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#FFFFFF;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;" edge="1" parent="1" source="21" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="Postgres" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="610" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="Nginx" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="520" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#FFFFFF;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;" edge="1" parent="1" source="27" target="25">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Flask App" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="520" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#FFFFFF;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;" edge="1" parent="1" source="29" target="25">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="Certbot" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="610" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#FFFFFF;fontSize=22;startArrow=classic;startFill=1;fontColor=#FFFFFF;" edge="1" parent="1" source="31" target="27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="Postgres" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="610" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="Openreasty&lt;br&gt;+ WAF" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;fillColor=#3399FF;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="520" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

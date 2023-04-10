@@ -3295,7 +3295,7 @@
 # }
 # spamcheck['classifier']['log_directory'] = "/var/log/gitlab/spam-classifier"
 
-external_url 'https://gitlab.devsecops23.maxmur.info'
+external_url 'https://gitlab.devsecops.maxmur.info'
 nginx['listen_port'] = 443
 nginx['listen_https'] = true
 letsencrypt['enable'] = false
@@ -3303,7 +3303,7 @@ nginx['ssl_certificate'] = "/etc/letsencrypt/live/gitlab.devsecops23.maxmur.info
 nginx['ssl_certificate_key'] = "/etc/letsencrypt/live/gitlab.devsecops23.maxmur.info/privkey.pem"
 gitlab_rails['gitlab_shell_ssh_port'] = 4224
 
-registry_external_url 'https://registry.gitlab.devsecops23.maxmur.info'
+registry_external_url 'https://registry.gitlab.devsecops.maxmur.info'
 gitlab_rails['registry_enabled'] = true
 registry['enable'] = true
 registry_nginx['enable'] = true

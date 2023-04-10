@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(gitlab.devsecops23.maxmur.info vault.devsecops23.maxmur.info defectdojo.devsecops23.maxmur.info registry.gitlab.devsecops23.maxmur.info)
+domains=(gitlab.devsecops.maxmur.info vault.devsecops.maxmur.info defectdojo.devsecops.maxmur.info registry.gitlab.devsecops.maxmur.info)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="muravjev.mak@yandex.ru" # Adding a valid address is strongly recommended

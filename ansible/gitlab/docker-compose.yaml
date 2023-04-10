@@ -15,7 +15,7 @@ services:
         nginx['ssl_certificate_key'] = "/etc/letsencrypt/live/gitlab.devsecops.maxmur.info/privkey.pem"
         gitlab_rails['gitlab_shell_ssh_port'] = 4224
 
-        registry_external_url 'https://registry.gitlab.devsecops23.maxmur.info'
+        registry_external_url 'https://registry.gitlab.devsecops.maxmur.info'
         gitlab_rails['registry_enabled'] = true
         registry['enable'] = true
         registry_nginx['enable'] = true
