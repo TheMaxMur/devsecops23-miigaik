@@ -1,4 +1,20 @@
-# Инфраструктура компании DORA FOND
+# Соревнование DevSecOps 2023 в МИИГАиК
+
+Для понимания, что написано дальше следует прочитать файл [DevSecOps_2023_Задание.pdf](./DevSecOps_2023_tasks.pdf)
+
+## Инфраструктура компании DORA FOND
+
+### Все репозитории
+
+<details><summary>Подробнее</summary>
+
+[flask_app](https://github.com/TheMaxMur/devsecops23-miigaik-flask_app) -- наше приложение
+
+[iac](https://github.com/TheMaxMur/devsecops23-miigaik-iac) -- наше описание инфраструктуры приложения
+
+[boys_leak_repo](https://github.com/TheMaxMur/devsecops-23-miigaik-boys_leak_repo) -- слитый репозиторий команды Boys
+
+</details>
 
 ### Инициализация
 
