@@ -84,12 +84,15 @@ COPY ./nginx/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 
 COPY ./nginx/conf.d /usr/local/openresty/nginx/conf/conf.d
 
-RUN chown -R 1001:root /opt; \
-    chown -R 1001:root /usr/local/ ;\
-    chown -R 1001:root /var/run/openresty/;\
+RUN chown -R 1001:1001 /opt; \
+    chown -R 1001:1001 /usr/local/ ;\
+    chown -R 1001:1001 /var/run/openresty/;\
     chmod +x /usr/local/clamav/rules/modsec_clamav.pl
-RUN ls -al /usr/local/clamav/rules/modsec_clamav.pl;
 
-USER 1001
+RUN chmod -R 700 /bin;\
+    chmod -R 700 /usr/bin;\
+    chmod 701 /usr/bin/openresty
+
+USER 1001:1001
 
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
